@@ -19,6 +19,6 @@ pbc             = xyz       ; Periodic Boundary Conditions in all 3 dimensions
 ; CP2K section
 qmmm-cp2k-active    = true      ; Activate QMMM MdModule
 qmmm-cp2k-qmgroup   = QMatoms   ; Index group of QM atoms 
-qmmm-cp2k-qmmethod  = PBE       ; Can be amended to INPUT and then use the -qmi flag for a custom cp2k.inp file in the gmx_mpi_d grompp command.
+qmmm-cp2k-qmmethod  = PBE       ; Can be amended to INPUT and then use the -qmi flag for a custom cp2k.inp file in the gmx_mpi grompp command.
 qmmm-cp2k-qmcharge  = 0         ; Charge of QM system
 qmmm-cp2k-qmmultiplicity = 1    ; Multiplicity of QM system
