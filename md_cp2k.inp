@@ -1,0 +1,117 @@
+&GLOBAL
+  PRINT_LEVEL LOW
+  PROJECT GROMACS
+  RUN_TYPE ENERGY_FORCE
+&END GLOBAL
+&FORCE_EVAL
+  METHOD QMMM
+  &DFT
+    CHARGE 0
+    MULTIPLICITY 1
+    BASIS_SET_FILE_NAME  BASIS_MOLOPT
+    POTENTIAL_FILE_NAME  POTENTIAL
+    &MGRID
+      NGRIDS 5
+      CUTOFF 450
+      REL_CUTOFF 50
+      COMMENSURATE
+    &END MGRID
+    &SCF
+      SCF_GUESS RESTART
+      EPS_SCF 5.0E-8
+      MAX_SCF 20
+      &OT  T
+        MINIMIZER  DIIS
+        STEPSIZE   0.15
+        PRECONDITIONER FULL_ALL
+      &END OT
+      &OUTER_SCF  T
+        MAX_SCF 20
+        EPS_SCF 5.0E-8
+      &END OUTER_SCF
+    &END SCF
+    &XC
+      DENSITY_CUTOFF     1.0E-12
+      GRADIENT_CUTOFF    1.0E-12
+      TAU_CUTOFF         1.0E-12
+      &XC_FUNCTIONAL PBE
+      &END XC_FUNCTIONAL
+    &END XC
+    &QS
+     METHOD GPW
+     EPS_DEFAULT 1.0E-10
+     EXTRAPOLATION ASPC
+     EXTRAPOLATION_ORDER  4
+    &END QS
+  &END DFT
+  &QMMM 
+    &CELL                           # These coordinates with units in Å, must match the box size selected with gmx_mpi
+      A 4.000 0.000 0.000
+      B 0.000 4.000 0.000
+      C 0.000 0.000 4.000
+      PERIODIC XYZ
+    &END CELL
+    CENTER EVERY_STEP
+    CENTER_GRID TRUE
+    &WALLS
+      TYPE REFLECTIVE
+    &END WALLS
+    ECOUPL GAUSS
+    USE_GEEP_LIB 12
+    &PERIODIC
+      GMAX     1.0E+00
+      &MULTIPOLE ON
+         RCUT     1.0E+01
+         EWALD_PRECISION     1.0E-06
+      &END
+    &END PERIODIC
+    &QM_KIND H                      # These indexes must be the same as those in the QMatom section in the qm_water.ndx file. 
+      MM_INDEX 42470 42471
+    &END QM_KIND
+    &QM_KIND O  
+      MM_INDEX 42469
+    &END QM_KIND
+  &END QMMM
+  &MM
+    &FORCEFIELD
+      DO_NONBONDED FALSE
+    &END FORCEFIELD
+    &POISSON
+      &EWALD
+        EWALD_TYPE NONE
+      &END EWALD
+    &END POISSON
+  &END MM
+  &SUBSYS
+    &CELL                           # These coordinated with units in Å, must match the box size of the whole system. They can be found on the bottom of box.gro.
+      A 107.57 0.000 0.000
+      B 0.000 106.110 0.000
+      C 0.000 0.000 140.090
+      PERIODIC XYZ
+    &END CELL
+    &TOPOLOGY
+      COORD_FILE_NAME md_cp2k.pdb
+      COORD_FILE_FORMAT PDB
+      CHARGE_EXTENDED TRUE
+      CONNECTIVITY OFF
+      &GENERATE
+         &ISOLATED_ATOMS
+            LIST 1..66328
+         &END
+      &END GENERATE
+    &END TOPOLOGY
+    &KIND H  
+      ELEMENT H  
+      BASIS_SET DZVP-MOLOPT-GTH
+      POTENTIAL GTH-PBE
+    &END KIND
+    &KIND O  
+      ELEMENT O  
+      BASIS_SET DZVP-MOLOPT-GTH
+      POTENTIAL GTH-PBE
+    &END KIND
+    &KIND X
+      ELEMENT H
+    &END KIND
+  &END SUBSYS
+&END FORCE_EVAL
