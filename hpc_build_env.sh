@@ -14,7 +14,7 @@ source ~/gromacs/bin/GMXRC
 
 # For building cp2k and gromacs with cuda 
 export MY_GCC_DIR="/home/users/jonasbaa/apps/gcc/11.4.0" 
-export MY_CMAKE_DIR="/home/users/jonasbaa/WaterPhase/cp2k/tools/toolchain/install/cmake-3.31.7"
+export MY_CMAKE_DIR="/home/users/jonasbaa/WaterPhase/cp2k/tools/toolchain/install/cmake-3.28.3"
 export MKLROOT=/opt/intel/oneapi/mkl/2025.2
 export CUDA_HOME="/opt/nvidia/hpc_sdk/Linux_x86_64/25.1/cuda" 
 
